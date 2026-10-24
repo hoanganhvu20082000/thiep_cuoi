@@ -17,49 +17,33 @@
   // Trình duyệt chặn phát có tiếng khi khách chưa tương tác, nên: thử phát ngay,
   // nếu bị chặn thì phát ở lần chạm / cuộn / bấm phím đầu tiên.
   (() => {
-    // Điện thoại: YouTube luôn bật video (iOS / Zalo / Facebook) → chỉ dùng YouTube trên máy tính.
-    const isMobile = matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|iPod|Zalo|FBAN|FBAV/i.test(navigator.userAgent);
-    const useYoutube = !W.musicFile && W.musicYoutubeId && !isMobile;
-    if (!W.musicFile && !useYoutube) return;
+    if (!W.musicFile) return;
+    const start = W.musicStart || 0;
+    const audio = Object.assign(new Audio(W.musicFile), { volume: 0.6, preload: "auto" });
+    audio.setAttribute("playsinline", "");
+    audio.addEventListener("loadedmetadata", () => { if (audio.currentTime < start) audio.currentTime = start; }, { once: true });
+    // Hết bài thì quay lại đoạn bắt đầu
+    audio.addEventListener("ended", () => { audio.currentTime = start; audio.play().catch(() => {}); });
 
-    let started = false, ready = false, play = () => {};
+    let started = false;
     // Chỉ các sự kiện này mới được trình duyệt tính là "người dùng tương tác" (scroll thì không)
     const EVENTS = ["pointerup", "touchend", "click", "keydown"];
-    const unlock = () => {
-      if (!started) play();
-      if (started) EVENTS.forEach((ev) => removeEventListener(ev, unlock));
+    const play = () => {
+      if (started) return;
+      if (audio.currentTime < start && audio.readyState >= 1) audio.currentTime = start;
+      audio.play().then(() => {
+        started = true;
+        EVENTS.forEach((ev) => removeEventListener(ev, play));
+      }).catch(() => {});
     };
-    EVENTS.forEach((ev) => addEventListener(ev, unlock, { passive: true }));
+    EVENTS.forEach((ev) => addEventListener(ev, play, { passive: true }));
+    play(); // thử phát ngay; nếu trình duyệt chặn thì phát ở lần chạm đầu tiên
 
-    if (W.musicFile) {
-      const audio = Object.assign(new Audio(W.musicFile), { loop: true, volume: 0.6, preload: "auto" });
-      play = () => audio.play().then(() => (started = true)).catch(() => {});
-      play();
-      return;
-    }
-
-    // YouTube IFrame API (embed chính chủ, cho phép nhúng)
-    let yt;
-    play = () => {
-      if (!ready) return;
-      yt.unMute(); yt.setVolume(70); yt.playVideo();
-    };
-    window.onYouTubeIframeAPIReady = () => {
-      yt = new YT.Player("music-player", {
-        videoId: W.musicYoutubeId, width: 200, height: 120,
-        playerVars: { autoplay: 1, start: W.musicStart || 0, playsinline: 1, controls: 0, rel: 0, loop: 1, playlist: W.musicYoutubeId },
-        events: {
-          onReady: () => { ready = true; play(); },
-          onStateChange: (e) => {
-            if (e.data === YT.PlayerState.PLAYING && !yt.isMuted()) started = true;
-            if (e.data === YT.PlayerState.ENDED) { yt.seekTo(W.musicStart || 0); yt.playVideo(); }
-          }
-        }
-      });
-    };
-    const s = document.createElement("script");
-    s.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(s);
+    // Tạm dừng khi khách chuyển tab / tắt màn hình, mở lại thì phát tiếp
+    document.addEventListener("visibilitychange", () => {
+      if (!started) return;
+      if (document.hidden) audio.pause(); else audio.play().catch(() => {});
+    });
   })();
 
   // --- Story player: tự chạy từng cảnh như 1 clip ngắn ---

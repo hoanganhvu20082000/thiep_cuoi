@@ -11,6 +11,7 @@ Copy-Item "$root\index.html", "$root\style.css", "$root\main.js", "$root\config.
 $cfg = Get-Content "$root\config.js" -Raw
 $photos = [regex]::Matches($cfg, 'photo_\d+|hero') | ForEach-Object { $_.Value } | Select-Object -Unique
 foreach ($p in $photos) { Copy-Item "$root\assets\photos\$p.jpg" "$dist\assets\photos\" }
+if (Test-Path "$root\assets\music") { Copy-Item -Recurse "$root\assets\music" "$dist\assets\" }
 
 $size = (Get-ChildItem $dist -Recurse -File | Measure-Object Length -Sum).Sum / 1MB
 Write-Output ("dist/ ready: {0} photos, {1:N1} MB" -f $photos.Count, $size)

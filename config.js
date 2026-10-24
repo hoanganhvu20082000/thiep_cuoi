@@ -24,13 +24,9 @@ window.WEDDING = {
   // Chỉ vài tấm cho album nhỏ
   album: ["photo_03", "photo_05", "photo_08", "photo_13", "photo_17", "photo_25"],
 
-  // Nhạc nền.
-  // - musicFile: file mp3 (đặt trong assets/, vd "assets/music.mp3") → phát CHỈ TIẾNG trên mọi thiết bị.
-  // - Để trống: chỉ máy tính phát nhạc qua YouTube (ẩn); điện thoại không phát (YouTube sẽ bật video).
-  musicFile: "",
-  musicYoutubeId: "Y5VoCfbB6As",
+  // Nhạc nền: "Váy Cưới" - ERIK x Kai Đinh. musicStart = giây bắt đầu phát.
+  musicFile: "assets/music/vay-cuoi.mp3",
   musicStart: 14,
-  musicTitle: "Váy Cưới · ERIK x Kai Đinh",
 
   // URL Google Form (/formResponse) hoặc Apps Script để nhận RSVP. Trống = chỉ lưu trên máy khách.
   rsvpEndpoint: ""
