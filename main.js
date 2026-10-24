@@ -13,6 +13,19 @@
   });
   $("#hero-photo").src = W.heroPhoto;
 
+  // Tên ở ảnh bìa: nếu xếp 1 hàng mà bị xuống dòng thì chuyển sang xếp dọc (♥ nằm giữa 2 tên)
+  (() => {
+    const box = $(".hero__names");
+    const fit = () => {
+      box.classList.remove("is-stacked");
+      const [a, b] = box.querySelectorAll("span");
+      if (a && b && Math.abs(a.offsetTop - b.offsetTop) > 4) box.classList.add("is-stacked");
+    };
+    fit();
+    addEventListener("resize", fit);
+    document.fonts?.ready.then(fit); // đo lại sau khi font Pacifico tải xong
+  })();
+
   // --- Nhạc nền: tự phát, không nút ---
   // Trình duyệt chặn phát có tiếng khi khách chưa tương tác, nên: thử phát ngay,
   // nếu bị chặn thì phát ở lần chạm / cuộn / bấm phím đầu tiên.
