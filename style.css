@@ -91,6 +91,9 @@ img { max-width: 100%; display: block; }
 .offer { animation: offer 1.4s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: left center; }
 .shy { animation: shy 1.2s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: bottom center; }
 .twinkle { animation: twinkle 1.6s ease-in-out infinite alternate; }
+/* Lon Bò Húc trượt từ tay Thảo sang Vũ */
+.slide.is-active .can-slide { animation: pop .5s cubic-bezier(.3,1.6,.5,1) 2.8s forwards, give 1.4s ease-in-out 3.4s forwards; }
+@keyframes give { to { transform: translateX(-162px) rotate(-8deg); } }
 @keyframes offer { to { transform: translateX(4px) rotate(-4deg); } }
 @keyframes shy { to { transform: rotate(-4deg) translateY(-2px); } }
 @keyframes twinkle { from { opacity: .3; } to { opacity: 1; } }
@@ -102,6 +105,10 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 16px 40px rgba(255, 93, 143, .2); border: 3px dashed #ffb3c8; }
 .invite__eyebrow { font-family: var(--cute); color: var(--pink); font-size: 1.8rem; margin: 0; }
 .families { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+.portrait {
+  width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: 50% 20%;
+  border-radius: 20px; margin-bottom: 14px; box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
 .family h3 { margin: 0; color: var(--blue); text-transform: uppercase; letter-spacing: .15em; font-size: .95rem; }
 .family p { margin: 2px 0; }
 .family .role { color: var(--muted); font-size: .9rem; margin-top: 10px; }
@@ -207,7 +214,9 @@ img { max-width: 100%; display: block; }
   .player__caption h3 { font-size: 1.15rem; }
   .hero__photo { object-position: 50% 25%; }
   .album { grid-template-columns: repeat(2, 1fr); }
-  .families { grid-template-columns: 1fr; }
+  .families { gap: 10px; }
+  .family .name { font-size: 1.35rem; }
+  .family p { font-size: .85rem; }
   .countdown { gap: 8px; }
   .countdown div { width: 68px; }
 }
