@@ -5,33 +5,5 @@
     "attend": "yes",
     "message": "test",
     "hidden": false
-  },
-  {
-    "at": "2026-10-24T09:44:20.771Z",
-    "name": "Kiro test 1792835063",
-    "attend": "yes",
-    "message": "Lời chúc thử nghiệm",
-    "hidden": false
-  },
-  {
-    "at": "2026-10-24T09:44:46.523Z",
-    "name": "Khách A1",
-    "attend": "yes",
-    "message": "Chúc mừng hạnh phúc!",
-    "hidden": false
-  },
-  {
-    "at": "2026-10-24T09:44:47.758Z",
-    "name": "Khách A2",
-    "attend": "yes",
-    "message": "<script>alert(1)</script> trăm năm",
-    "hidden": false
-  },
-  {
-    "at": "2026-10-24T09:44:49.394Z",
-    "name": "Khách A3",
-    "attend": "yes",
-    "message": "Sớm có em bé 👶",
-    "hidden": false
   }
 ]
