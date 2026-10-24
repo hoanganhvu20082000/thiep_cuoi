@@ -13,40 +13,48 @@
   });
   $("#hero-photo").src = W.heroPhoto;
 
-  // --- Nhạc nền ---
-  // Ưu tiên file nhạc có bản quyền (musicFile). Không có thì nhúng YouTube chính chủ.
+  // --- Nhạc nền: tự phát, không nút ---
+  // Trình duyệt chặn phát có tiếng khi khách chưa tương tác, nên: thử phát ngay,
+  // nếu bị chặn thì phát ở lần chạm / cuộn / bấm phím đầu tiên.
   (() => {
-    const btn = $("#music-btn"), box = $("#music-player");
-    if (!W.musicFile && !W.musicYoutubeId) { $("#music").hidden = true; return; }
-    let on = false, audio = null;
-    const set = (v) => {
-      on = v;
-      btn.classList.toggle("is-on", v);
-      btn.setAttribute("aria-pressed", String(v));
-      btn.setAttribute("aria-label", v ? "Tắt nhạc" : "Bật nhạc");
+    if (!W.musicFile && !W.musicYoutubeId) return;
+    let started = false, ready = false, play = () => {};
+    const kick = () => { if (!started) play(); };
+    const unlock = () => {
+      kick();
+      if (started) ["pointerdown", "touchstart", "keydown", "scroll", "wheel"].forEach((ev) => removeEventListener(ev, unlock));
     };
-    const play = () => {
-      if (W.musicFile) {
-        audio ||= Object.assign(new Audio(W.musicFile), { loop: true, volume: 0.6 });
-        audio.play().then(() => set(true)).catch(() => set(false));
-        return;
-      }
-      // YouTube: tạo iframe khi bấm (người dùng đã tương tác nên được phép phát có tiếng)
-      const q = new URLSearchParams({ autoplay: 1, start: W.musicStart || 0, loop: 1, playlist: W.musicYoutubeId, rel: 0, playsinline: 1 });
-      box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(W.musicYoutubeId)}?${q}"
-        title="Nhạc nền: ${esc(W.musicTitle || "")}" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-        <p>${esc(W.musicTitle || "")}</p>`;
-      box.hidden = false;
-      set(true);
+    ["pointerdown", "touchstart", "keydown", "scroll", "wheel"].forEach((ev) => addEventListener(ev, unlock, { passive: true }));
+
+    if (W.musicFile) {
+      const audio = Object.assign(new Audio(W.musicFile), { loop: true, volume: 0.6, preload: "auto" });
+      play = () => audio.play().then(() => (started = true)).catch(() => {});
+      play();
+      return;
+    }
+
+    // YouTube IFrame API (embed chính chủ, cho phép nhúng)
+    let yt;
+    play = () => {
+      if (!ready) return;
+      yt.unMute(); yt.setVolume(70); yt.playVideo();
     };
-    const stop = () => {
-      if (audio) audio.pause();
-      box.innerHTML = ""; box.hidden = true;
-      set(false);
+    window.onYouTubeIframeAPIReady = () => {
+      yt = new YT.Player("music-player", {
+        videoId: W.musicYoutubeId, width: 200, height: 120,
+        playerVars: { autoplay: 1, start: W.musicStart || 0, playsinline: 1, controls: 0, rel: 0, loop: 1, playlist: W.musicYoutubeId },
+        events: {
+          onReady: () => { ready = true; play(); },
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.PLAYING && !yt.isMuted()) started = true;
+            if (e.data === YT.PlayerState.ENDED) { yt.seekTo(W.musicStart || 0); yt.playVideo(); }
+          }
+        }
+      });
     };
-    btn.addEventListener("click", () => (on ? stop() : play()));
-    document.querySelectorAll("[data-music-start]").forEach((el) =>
-      el.addEventListener("click", () => { if (!on) play(); }));
+    const s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(s);
   })();
 
   // --- Story player: tự chạy từng cảnh như 1 clip ngắn ---
