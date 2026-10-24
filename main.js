@@ -206,9 +206,21 @@
   const KEY = "wedding-wishes-vu-thao";
   const loadLocal = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } };
   let current = [];
+  // Lời chúc chạy dọc liên tục (kiểu bảng tin). Nhân đôi danh sách để vòng lặp liền mạch.
   const render = () => {
-    $("#wishes").innerHTML = current.filter((w) => w.message)
-      .map((w) => `<li><b>${esc(w.name)}</b>: ${esc(w.message)}</li>`).join("");
+    const box = $("#wishes");
+    const list = current.filter((w) => w.message);
+    const item = (w) => `<li><b>${esc(w.name)}</b><span>${esc(w.message)}</span></li>`;
+    box.hidden = !list.length;
+    if (!list.length) { box.innerHTML = ""; return; }
+    const html = list.map(item).join("");
+    const running = list.length >= 3;
+    box.classList.toggle("is-running", running);
+    box.innerHTML = `<ul class="wishes__track">${html}${running ? html.replace(/<li>/g, '<li aria-hidden="true">') : ""}</ul>`;
+    if (running) {
+      // Tốc độ đều: khoảng 2.5s cho mỗi lời chúc
+      box.querySelector(".wishes__track").style.animationDuration = `${list.length * 2.5}s`;
+    }
   };
   (async () => {
     if (W.rsvpEndpoint) {

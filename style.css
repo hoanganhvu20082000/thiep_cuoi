@@ -216,10 +216,26 @@ button { font: inherit; color: inherit; -webkit-appearance: none; appearance: no
 .rsvp .btn { justify-self: center; min-width: 160px; }
 .rsvp .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .rsvp__status { text-align: center; color: var(--pink); min-height: 1.4em; margin: 0; }
-.wishes { list-style: none; padding: 0; max-width: 520px; margin: 18px auto 0; max-height: 300px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-.wishes:empty { display: none; }
-.wishes li { background: #fff; border-radius: 14px; padding: 10px 14px; margin-bottom: 8px; overflow-wrap: anywhere; }
-.wishes b { color: var(--pink); }
+/* Lời chúc: khung cố định, danh sách chạy từ dưới lên, mờ dần 2 đầu */
+.wishes { max-width: 520px; margin: 18px auto 0; position: relative; }
+.wishes[hidden] { display: none; }
+.wishes.is-running {
+  height: 300px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+}
+.wishes__track { list-style: none; margin: 0; padding: 0; }
+.wishes.is-running .wishes__track { animation: wishes-up linear infinite; }
+/* Chạm / rê chuột vào thì dừng lại để đọc */
+.wishes.is-running:hover .wishes__track,
+.wishes.is-running:active .wishes__track { animation-play-state: paused; }
+.wishes li {
+  background: #fff; border-radius: 14px; padding: 10px 14px; margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(255, 93, 143, .08); overflow-wrap: anywhere; text-align: left;
+}
+.wishes li b { display: block; color: var(--pink); font-size: .9rem; }
+.wishes li span { display: block; font-size: .95rem; }
+@keyframes wishes-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 
 .thanks { background: var(--pink); color: #fff; text-align: center; padding: 48px 20px calc(48px + var(--safe-b)); }
 .thanks__title { font-family: var(--cute); font-size: 2.3rem; line-height: 1.4; margin: 0; }
