@@ -57,6 +57,11 @@
     const toggle = $("#player-toggle");
     const DURATION = 5500;
     let idx = 0, playing = true, started = 0, elapsed = 0, raf = 0;
+    // Đổi icon SVG play/pause (không dùng ký tự ❚❚ ▶ vì mỗi máy vẽ font khác nhau → lệch)
+    const setIcon = (isPlaying) => {
+      toggle.classList.toggle("is-paused", !isPlaying);
+      toggle.setAttribute("aria-label", isPlaying ? "Tạm dừng" : "Phát");
+    };
 
     const go = (i) => {
       slides[idx].classList.remove("is-active");
@@ -85,8 +90,7 @@
       if (v === playing) return;
       if (v) started = performance.now(); else elapsed += performance.now() - started;
       playing = v;
-      toggle.textContent = v ? "❚❚" : "▶";
-      toggle.setAttribute("aria-label", v ? "Tạm dừng" : "Phát");
+      setIcon(v);
     };
 
     $("#player").addEventListener("click", (e) => {
@@ -107,7 +111,7 @@
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     playing = false;
     go(0);
-    if (reduce) { toggle.textContent = "▶"; toggle.setAttribute("aria-label", "Phát"); }
+    setIcon(false);
     new IntersectionObserver(([en]) => { if (!reduce) setPlaying(en.isIntersecting); }, { threshold: 0.5 }).observe($("#player"));
     raf = requestAnimationFrame(frame);
   })();
@@ -228,9 +232,16 @@
     st.textContent = entry.attend === "yes" ? "Yay! Hẹn gặp bạn ngày vui nha 💕" : "Cảm ơn lời chúc của bạn nhiều lắm 💕";
   });
 
-  // --- Hiện dần khi cuộn (kích hoạt animation trong từng chương) ---
-  const io = new IntersectionObserver((ents) => ents.forEach((en) => {
-    if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); }
-  }), { threshold: 0.25 });
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  // --- Hiện dần khi cuộn ---
+  // threshold 0 + rootMargin: phần tử cao hơn màn hình (thẻ thiệp mời trên điện thoại) vẫn hiện.
+  // Trước đây threshold .25 khiến khối cao > 4 màn hình không bao giờ hiện → khoảng hồng trống.
+  const reveals = document.querySelectorAll(".reveal");
+  const showAll = () => reveals.forEach((el) => el.classList.add("is-visible"));
+  if (!("IntersectionObserver" in window)) showAll();
+  else {
+    const io = new IntersectionObserver((ents) => ents.forEach((en) => {
+      if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); }
+    }), { threshold: 0, rootMargin: "0px 0px -8% 0px" });
+    reveals.forEach((el) => io.observe(el));
+  }
 })();

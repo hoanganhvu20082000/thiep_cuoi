@@ -2,7 +2,8 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ff5d8f" />
   <title>Anh Vũ &amp; Phương Thảo · 06.12.2026</title>
   <meta name="description" content="Thiệp cưới Anh Vũ & Phương Thảo - Chủ Nhật 06.12.2026 tại Bright Star Biên Hòa" />
   <meta property="og:title" content="Anh Vũ & Phương Thảo · 06.12.2026" />
@@ -275,9 +276,16 @@
         <p id="player-text"></p>
       </div>
       <div class="player__controls">
-        <button type="button" class="ctrl" data-act="prev" aria-label="Cảnh trước">‹</button>
-        <button type="button" class="ctrl ctrl--play" data-act="toggle" id="player-toggle" aria-label="Tạm dừng">❚❚</button>
-        <button type="button" class="ctrl" data-act="next" aria-label="Cảnh sau">›</button>
+        <button type="button" class="ctrl" data-act="prev" aria-label="Cảnh trước">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+        </button>
+        <button type="button" class="ctrl ctrl--play" data-act="toggle" id="player-toggle" aria-label="Tạm dừng">
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+        </button>
+        <button type="button" class="ctrl" data-act="next" aria-label="Cảnh sau">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
       </div>
     </div>
   </section>
