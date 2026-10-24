@@ -146,7 +146,7 @@
   $("#venue-hall").textContent = v.hall; $("#venue-hall").hidden = !v.hall;
   $("#venue-address").textContent = v.address;
   const q = encodeURIComponent(`${v.mapQuery}, ${v.address}`);
-  $("#venue-map").href = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  $("#venue-map").href = v.mapUrl || `https://www.google.com/maps/search/?api=1&query=${q}`;
   $("#map").src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
 
   // --- Countdown ---
