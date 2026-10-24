@@ -87,6 +87,7 @@ img { max-width: 100%; display: block; }
 .slide.is-active .pop--1 { animation-delay: .5s; }
 .slide.is-active .pop--2 { animation-delay: 1.8s; }
 .slide.is-active .pop--3 { animation-delay: 2.8s; }
+.slide.is-active .pop--4 { animation-delay: 3.8s; }
 .offer { animation: offer 1.4s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: left center; }
 .shy { animation: shy 1.2s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: bottom center; }
 .twinkle { animation: twinkle 1.6s ease-in-out infinite alternate; }
