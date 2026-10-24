@@ -5,5 +5,12 @@
     "attend": "yes",
     "message": "test",
     "hidden": false
+  },
+  {
+    "at": "2026-10-24T09:44:20.771Z",
+    "name": "Kiro test 1792835063",
+    "attend": "yes",
+    "message": "Lời chúc thử nghiệm",
+    "hidden": false
   }
 ]
