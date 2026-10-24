@@ -24,6 +24,13 @@ window.WEDDING = {
   // Chỉ vài tấm cho album nhỏ
   album: ["photo_03", "photo_05", "photo_08", "photo_13", "photo_17", "photo_25"],
 
+  // Nhạc nền. Nếu có file mp3 hợp lệ (đã mua / được phép dùng) thì đặt vào assets/ và điền musicFile,
+  // khi đó sẽ phát file thay cho YouTube.
+  musicFile: "",
+  musicYoutubeId: "Y5VoCfbB6As",
+  musicStart: 14,
+  musicTitle: "Váy Cưới · ERIK x Kai Đinh",
+
   // URL Google Form (/formResponse) hoặc Apps Script để nhận RSVP. Trống = chỉ lưu trên máy khách.
   rsvpEndpoint: ""
 };

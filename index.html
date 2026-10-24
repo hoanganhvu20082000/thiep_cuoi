@@ -76,7 +76,7 @@
         <span data-bind="bride"></span>
       </h1>
       <p class="hero__date"><span data-bind="weekday"></span> · <span data-bind="dateText"></span></p>
-      <a href="#story" class="btn btn--light">Đọc chuyện tình của tụi mình ↓</a>
+      <a href="#story" class="btn btn--light" data-music-start>Mở thiệp &amp; bật nhạc 🎵</a>
     </div>
     <div class="clouds" aria-hidden="true"><span></span><span></span><span></span></div>
   </header>
@@ -131,10 +131,8 @@
         <figure class="slide" data-title="4 năm sau" data-caption="Bạn ấy lên xe hoa, nhờ Vũ chở giùm Thảo đi cùng 💌" aria-hidden="true">
           <svg viewBox="0 0 300 200" role="img" aria-label="Bốn năm sau, người bạn chung cưới và nhờ chú rể chở cô dâu đi">
             <rect x="0" y="160" width="300" height="40" fill="#bfe3a8"/>
-            <rect x="20" y="30" width="70" height="70" rx="8" fill="#fff" stroke="#e76f51" stroke-width="3"/>
-            <rect x="20" y="30" width="70" height="20" rx="6" fill="#e76f51"/>
-            <text x="55" y="45" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">4 NĂM SAU</text>
-            <text x="55" y="86" text-anchor="middle" font-size="28" font-weight="700" fill="#e76f51">💼</text>
+            <rect x="14" y="18" width="74" height="22" rx="11" fill="#e76f51"/>
+            <text x="51" y="33" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">4 NĂM SAU</text>
             <g class="bob">
               <path d="M130 96 Q151 82 172 96 L178 150 Q151 158 124 150Z" fill="#fff" opacity=".7"/>
               <use href="#friend" x="128" y="88" width="46" height="76"/>
@@ -358,6 +356,14 @@
     <p>Sự hiện diện của bạn là món quà ý nghĩa nhất với tụi mình.</p>
     <p class="thanks__sign"><span data-bind="groom"></span> &amp; <span data-bind="bride"></span></p>
   </footer>
+
+  <!-- Nhạc nền: nút nổi + mini player YouTube chính chủ (trình duyệt chặn tự phát có tiếng, nên cần 1 lần bấm) -->
+  <div class="music" id="music">
+    <div class="music__player" id="music-player" hidden></div>
+    <button type="button" class="music__btn" id="music-btn" aria-label="Bật nhạc" aria-pressed="false">
+      <span class="music__icon" aria-hidden="true">♫</span>
+    </button>
+  </div>
 
   <dialog id="lightbox" class="lightbox" aria-label="Xem ảnh">
     <button class="lb-btn lb-close" data-lb="close" aria-label="Đóng">×</button>
