@@ -24,8 +24,9 @@ window.WEDDING = {
   // Chỉ vài tấm cho album nhỏ
   album: ["photo_03", "photo_05", "photo_08", "photo_13", "photo_17", "photo_25"],
 
-  // Nhạc nền. Nếu có file mp3 hợp lệ (đã mua / được phép dùng) thì đặt vào assets/ và điền musicFile,
-  // khi đó sẽ phát file thay cho YouTube.
+  // Nhạc nền.
+  // - musicFile: file mp3 (đặt trong assets/, vd "assets/music.mp3") → phát CHỈ TIẾNG trên mọi thiết bị.
+  // - Để trống: chỉ máy tính phát nhạc qua YouTube (ẩn); điện thoại không phát (YouTube sẽ bật video).
   musicFile: "",
   musicYoutubeId: "Y5VoCfbB6As",
   musicStart: 14,

@@ -17,14 +17,19 @@
   // Trình duyệt chặn phát có tiếng khi khách chưa tương tác, nên: thử phát ngay,
   // nếu bị chặn thì phát ở lần chạm / cuộn / bấm phím đầu tiên.
   (() => {
-    if (!W.musicFile && !W.musicYoutubeId) return;
+    // Điện thoại: YouTube luôn bật video (iOS / Zalo / Facebook) → chỉ dùng YouTube trên máy tính.
+    const isMobile = matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|iPod|Zalo|FBAN|FBAV/i.test(navigator.userAgent);
+    const useYoutube = !W.musicFile && W.musicYoutubeId && !isMobile;
+    if (!W.musicFile && !useYoutube) return;
+
     let started = false, ready = false, play = () => {};
-    const kick = () => { if (!started) play(); };
+    // Chỉ các sự kiện này mới được trình duyệt tính là "người dùng tương tác" (scroll thì không)
+    const EVENTS = ["pointerup", "touchend", "click", "keydown"];
     const unlock = () => {
-      kick();
-      if (started) ["pointerdown", "touchstart", "keydown", "scroll", "wheel"].forEach((ev) => removeEventListener(ev, unlock));
+      if (!started) play();
+      if (started) EVENTS.forEach((ev) => removeEventListener(ev, unlock));
     };
-    ["pointerdown", "touchstart", "keydown", "scroll", "wheel"].forEach((ev) => addEventListener(ev, unlock, { passive: true }));
+    EVENTS.forEach((ev) => addEventListener(ev, unlock, { passive: true }));
 
     if (W.musicFile) {
       const audio = Object.assign(new Audio(W.musicFile), { loop: true, volume: 0.6, preload: "auto" });
