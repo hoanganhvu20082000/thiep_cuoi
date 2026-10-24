@@ -1,0 +1,201 @@
+:root {
+  --pink: #ff5d8f;
+  --pink-soft: #ffe3ec;
+  --blue: #5b8def;
+  --cream: #fffaf3;
+  --text: #4a3b3b;
+  --muted: #8f7f7f;
+  --cute: "Pacifico", cursive;
+  --script: "Dancing Script", cursive;
+  --body: "Quicksand", system-ui, sans-serif;
+  --radius: 24px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--body); color: var(--text); background: var(--cream); line-height: 1.65; }
+img { max-width: 100%; display: block; }
+
+.section-title { font-family: var(--cute); font-weight: 400; color: var(--pink); text-align: center; font-size: clamp(2rem, 6vw, 3rem); margin: 0 0 8px; }
+.section-sub { text-align: center; color: var(--muted); margin: 0 0 40px; }
+.lead { font-family: var(--script); font-size: 1.6rem; color: var(--pink); margin: 0 0 12px; }
+
+.btn {
+  display: inline-block; padding: 12px 28px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--pink); color: #fff; font: 700 1rem var(--body); text-decoration: none;
+  box-shadow: 0 6px 0 #d63c6c; transition: transform .15s, box-shadow .15s;
+}
+.btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 #d63c6c; }
+.btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.btn--light { background: #fff; color: var(--pink); box-shadow: 0 6px 0 rgba(0, 0, 0, .2); }
+
+/* ===== Hero ===== */
+.hero {
+  position: relative; min-height: 100svh; display: grid; place-items: center; text-align: center;
+  background: center 30% / cover no-repeat; color: #fff; overflow: hidden;
+}
+.hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(80,20,40,.55)); }
+.hero__inner { position: relative; padding: 24px; animation: rise 1.2s ease-out both; }
+.hero__eyebrow { letter-spacing: .4em; text-transform: uppercase; font-weight: 700; margin: 0; }
+.hero__names { font-family: var(--cute); font-weight: 400; font-size: clamp(2.6rem, 10vw, 5.5rem); line-height: 1.2; margin: 8px 0;
+  display: flex; flex-wrap: wrap; gap: .1em .4em; justify-content: center; align-items: center; text-shadow: 0 3px 12px rgba(0,0,0,.35); }
+.hero__heart { width: .7em; height: .65em; animation: beat 1.2s infinite; }
+.hero__date { font-size: clamp(1.1rem, 3vw, 1.5rem); letter-spacing: .15em; margin: 0 0 28px; }
+
+.clouds span { position: absolute; background: #fff; border-radius: 999px; opacity: .55; height: 26px; animation: drift linear infinite; }
+.clouds span::before, .clouds span::after { content: ""; position: absolute; background: inherit; border-radius: 50%; }
+.clouds span::before { width: 40%; height: 180%; top: -90%; left: 15%; }
+.clouds span::after { width: 30%; height: 140%; top: -60%; left: 50%; }
+.clouds span:nth-child(1) { width: 110px; top: 12%; animation-duration: 38s; }
+.clouds span:nth-child(2) { width: 80px; top: 26%; animation-duration: 52s; animation-delay: -20s; }
+.clouds span:nth-child(3) { width: 140px; top: 8%; animation-duration: 64s; animation-delay: -40s; }
+
+/* ===== Story timeline ===== */
+.story { padding: 80px 20px; background: linear-gradient(#fffaf3, #fff0f5); }
+.timeline { list-style: none; margin: 0 auto; padding: 0; max-width: 1040px; position: relative; display: grid; gap: 56px; }
+/* Đường nét đứt nối các chương */
+.timeline::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; transform: translateX(-50%);
+  background: repeating-linear-gradient(var(--pink) 0 12px, transparent 12px 24px); opacity: .35;
+}
+.chapter { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.chapter::after { /* chấm tròn giữa timeline */
+  content: "♥"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%;
+  background: #fff; color: var(--pink); border: 3px solid var(--pink); font-size: 1.1rem;
+}
+.chapter:nth-child(even) .scene { order: 2; }
+.scene { background: #fff; border-radius: var(--radius); padding: 10px; box-shadow: 0 10px 30px rgba(255, 93, 143, .15); border: 3px solid #ffd1df; }
+.scene svg { width: 100%; height: auto; display: block; border-radius: 16px; background: #f4fbff; }
+.chapter__text { background: #fff; border-radius: var(--radius); padding: 24px 28px; box-shadow: 0 10px 30px rgba(0,0,0,.05); }
+.chapter__no { display: inline-block; background: var(--pink-soft); color: var(--pink); font-weight: 700; font-size: .8rem; padding: 2px 12px; border-radius: 999px; }
+.chapter__text h3 { font-size: 1.35rem; margin: 10px 0 8px; color: #3a2a3a; }
+.chapter__text p { margin: 0 0 8px; }
+.aside { font-family: var(--script); font-size: 1.3rem; color: var(--pink); }
+
+/* ===== Invitation ===== */
+.invite { padding: 80px 20px; background: var(--pink-soft); display: grid; gap: 32px; justify-items: center; }
+.invite__card { width: 100%; max-width: 720px; background: #fff; border-radius: 32px; padding: 40px 28px; text-align: center;
+  box-shadow: 0 16px 40px rgba(255, 93, 143, .2); border: 3px dashed #ffb3c8; }
+.invite__eyebrow { font-family: var(--cute); color: var(--pink); font-size: 1.8rem; margin: 0; }
+.families { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+.family h3 { margin: 0; color: var(--blue); text-transform: uppercase; letter-spacing: .15em; font-size: .95rem; }
+.family p { margin: 2px 0; }
+.family .role { color: var(--muted); font-size: .9rem; margin-top: 10px; }
+.family .name { font-family: var(--cute); color: var(--pink); font-size: 1.7rem; margin: 0; }
+.family .place { color: var(--muted); font-style: italic; font-size: .9rem; }
+.when { padding: 20px 0; border-top: 2px dotted #ffd1df; border-bottom: 2px dotted #ffd1df; }
+.when p { margin: 0; }
+.when__weekday { text-transform: uppercase; letter-spacing: .3em; font-weight: 700; }
+.when__date { font-size: clamp(2.4rem, 8vw, 3.4rem); font-weight: 700; color: var(--pink); letter-spacing: .05em; }
+.when__time { font-weight: 700; }
+.when__lunar { color: var(--muted); font-style: italic; }
+.venue { padding-top: 20px; }
+.venue h3 { color: var(--blue); margin: 0 0 4px; }
+.venue p { margin: 2px 0; }
+.venue .btn { margin-top: 14px; }
+.map { width: 100%; height: 260px; border: 0; border-radius: 20px; margin-top: 20px; }
+
+.countdown-wrap { text-align: center; width: 100%; max-width: 720px; }
+.countdown { display: flex; justify-content: center; gap: 12px; margin-bottom: 28px; }
+.countdown div { width: 76px; padding: 10px 0; border-radius: 18px; background: #fff; box-shadow: 0 6px 0 #ffc2d4; }
+.countdown b { display: block; font-size: 1.8rem; color: var(--pink); }
+.countdown span { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.calendar { background: #fff; border-radius: 24px; padding: 20px; max-width: 380px; margin: 0 auto; }
+.calendar h3 { margin: 0 0 12px; color: var(--blue); }
+.calendar .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.calendar .dow { font-weight: 700; font-size: .75rem; color: var(--muted); }
+.calendar .day { padding: 6px 0; border-radius: 50%; }
+.calendar .is-wedding { background: var(--pink); color: #fff; font-weight: 700; animation: beat 1.4s infinite; }
+
+/* ===== Album ===== */
+.album-section { padding: 80px 20px; }
+.album { max-width: 1040px; margin: 24px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.album button { all: unset; cursor: zoom-in; border-radius: 20px; overflow: hidden; aspect-ratio: 3/4; box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+.album button:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+.album img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.album button:hover img { transform: scale(1.06) rotate(-1deg); }
+
+/* ===== RSVP ===== */
+.rsvp-section { padding: 80px 20px; background: linear-gradient(#fff0f5, #fffaf3); }
+.rsvp { max-width: 520px; margin: 24px auto 0; display: grid; gap: 14px; background: #fff; padding: 28px; border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,.05); }
+.rsvp label { display: grid; gap: 4px; font-weight: 600; }
+.rsvp input:not([type=radio]), .rsvp textarea { font: inherit; padding: 12px 14px; border: 2px solid #ffd1df; border-radius: 14px; }
+.rsvp input:focus, .rsvp textarea:focus { outline: none; border-color: var(--pink); }
+.rsvp fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+.rsvp legend { font-weight: 600; margin-bottom: 6px; }
+.rsvp .radio { display: flex; gap: 8px; align-items: center; font-weight: 400; }
+.rsvp .btn { justify-self: center; }
+.rsvp .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.rsvp__status { text-align: center; color: var(--pink); min-height: 1.4em; margin: 0; }
+.wishes { list-style: none; padding: 0; max-width: 520px; margin: 20px auto 0; max-height: 280px; overflow-y: auto; }
+.wishes li { background: #fff; border-radius: 16px; padding: 10px 14px; margin-bottom: 8px; }
+.wishes b { color: var(--pink); }
+
+.thanks { background: var(--pink); color: #fff; text-align: center; padding: 56px 20px; }
+.thanks__title { font-family: var(--cute); font-size: 2.6rem; margin: 0; }
+.thanks__sign { font-family: var(--script); font-size: 1.6rem; }
+
+/* ===== Lightbox ===== */
+.lightbox { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; }
+.lightbox::backdrop { background: rgba(30, 10, 20, .9); }
+.lightbox img { max-width: 94vw; max-height: 88vh; border-radius: 12px; }
+.lb-btn { position: fixed; width: 48px; height: 48px; border-radius: 50%; border: 0; background: rgba(255,255,255,.2); color: #fff; font-size: 2rem; cursor: pointer; }
+.lb-close { top: 16px; right: 16px; }
+.lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
+
+/* ===== Hoạt hình ===== */
+.reveal { opacity: 0; transform: translateY(40px) scale(.97); transition: opacity .8s, transform .8s cubic-bezier(.2,.8,.3,1.2); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Chỉ chạy animation trong scene khi chương đã hiện ra */
+.chapter .pop { opacity: 0; transform-box: fill-box; transform-origin: bottom center; }
+.chapter.is-visible .pop { animation: pop .5s cubic-bezier(.3,1.6,.5,1) forwards; }
+.chapter.is-visible .pop--1 { animation-delay: .6s; }
+.chapter.is-visible .pop--2 { animation-delay: 1.8s; }
+
+.bob { animation: bob 2s ease-in-out infinite; transform-box: fill-box; }
+.bob--late { animation-delay: -1s; }
+.float { animation: float 3s ease-in-out infinite; transform-box: fill-box; }
+.float--late { animation-delay: -1.5s; }
+.qmark { font: 700 22px var(--body); fill: var(--pink); animation: bob 1.4s ease-in-out infinite; }
+.flag { animation: wave 1s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: left center; }
+.dash { animation: dash 1.2s linear infinite; }
+
+.car-drive { animation: drive 2.6s ease-in-out infinite; }
+.wheel { transform-box: fill-box; transform-origin: center; animation: spin .6s linear infinite; }
+.road-dash { animation: road .5s linear infinite; }
+.hills { animation: road 6s linear infinite; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(30px); } }
+@keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } }
+@keyframes drift { from { transform: translateX(-200px); } to { transform: translateX(110vw); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes float { 0%, 100% { transform: translateY(0) scale(1); opacity: .9; } 50% { transform: translateY(-10px) scale(1.1); opacity: 1; } }
+@keyframes pop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
+@keyframes wave { to { transform: skewY(-12deg) scaleX(.85); } }
+@keyframes dash { to { stroke-dashoffset: -20; } }
+@keyframes drive { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(6px, -1.5px); } 50% { transform: translate(12px, 0); } 75% { transform: translate(6px, -1px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes road { to { transform: translateX(-40px); } }
+
+/* ===== Responsive: điện thoại / tablet ===== */
+@media (max-width: 760px) {
+  .timeline { gap: 40px; }
+  .timeline::before { left: 18px; }
+  .chapter { grid-template-columns: 1fr; gap: 14px; padding-left: 44px; }
+  .chapter::after { left: 18px; top: 24px; width: 32px; height: 32px; font-size: .9rem; }
+  .chapter:nth-child(even) .scene { order: 0; }
+  .chapter__text { padding: 18px 20px; }
+  .album { grid-template-columns: repeat(2, 1fr); }
+  .families { grid-template-columns: 1fr; }
+  .countdown { gap: 8px; }
+  .countdown div { width: 68px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal, .chapter .pop { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
