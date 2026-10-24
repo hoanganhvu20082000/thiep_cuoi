@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "at": "2026-10-24T09:44:11.988Z",
+    "name": "test",
+    "attend": "yes",
+    "message": "test",
+    "hidden": false
+  }
+]
