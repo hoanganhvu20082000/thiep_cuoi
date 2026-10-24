@@ -9,7 +9,7 @@ Copy-Item "$root\index.html", "$root\style.css", "$root\main.js", "$root\config.
 
 # Chỉ copy ảnh được nhắc tới trong config.js (heroPhoto + album)
 $cfg = Get-Content "$root\config.js" -Raw
-$photos = [regex]::Matches($cfg, 'photo_\d+') | ForEach-Object { $_.Value } | Select-Object -Unique
+$photos = [regex]::Matches($cfg, 'photo_\d+|hero') | ForEach-Object { $_.Value } | Select-Object -Unique
 foreach ($p in $photos) { Copy-Item "$root\assets\photos\$p.jpg" "$dist\assets\photos\" }
 
 $size = (Get-ChildItem $dist -Recurse -File | Measure-Object Length -Sum).Sum / 1MB

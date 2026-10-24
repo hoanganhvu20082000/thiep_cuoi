@@ -11,7 +11,70 @@
     const v = W[el.dataset.bind];
     if (v) el.textContent = v; else if (el.tagName === "P") el.hidden = true;
   });
-  $("#hero").style.backgroundImage = `url("${W.heroPhoto}")`;
+  $("#hero-photo").src = W.heroPhoto;
+
+  // --- Story player: tự chạy từng cảnh như 1 clip ngắn ---
+  (() => {
+    const slides = [...document.querySelectorAll(".slide")];
+    if (!slides.length) return;
+    const bars = [...document.querySelectorAll(".player__bars span")];
+    const toggle = $("#player-toggle");
+    const DURATION = 5500;
+    let idx = 0, playing = true, started = 0, elapsed = 0, raf = 0;
+
+    const go = (i) => {
+      slides[idx].classList.remove("is-active");
+      slides[idx].setAttribute("aria-hidden", "true");
+      idx = (i + slides.length) % slides.length;
+      const s = slides[idx];
+      // Reset animation trong cảnh để chạy lại từ đầu
+      s.classList.remove("is-active"); void s.offsetWidth; s.classList.add("is-active");
+      s.setAttribute("aria-hidden", "false");
+      bars.forEach((b, j) => { b.classList.toggle("done", j < idx); b.firstChild.style.width = j < idx ? "100%" : "0"; });
+      $("#player-no").textContent = `${idx + 1}/${slides.length}`;
+      $("#player-title").textContent = s.dataset.title;
+      $("#player-text").textContent = s.dataset.caption;
+      const cap = $(".player__caption"); cap.classList.remove("swap"); void cap.offsetWidth; cap.classList.add("swap");
+      elapsed = 0; started = performance.now();
+    };
+    const frame = (t) => {
+      if (playing) {
+        const p = Math.min(1, (elapsed + t - started) / DURATION);
+        bars[idx].firstChild.style.width = `${p * 100}%`;
+        if (p >= 1) go(idx + 1);
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    const setPlaying = (v) => {
+      if (v === playing) return;
+      if (v) started = performance.now(); else elapsed += performance.now() - started;
+      playing = v;
+      toggle.textContent = v ? "❚❚" : "▶";
+      toggle.setAttribute("aria-label", v ? "Tạm dừng" : "Phát");
+    };
+
+    $("#player").addEventListener("click", (e) => {
+      const act = e.target.closest("[data-act]")?.dataset.act;
+      if (act === "prev") go(idx - 1);
+      else if (act === "next") go(idx + 1);
+      else if (act === "toggle") setPlaying(!playing);
+    });
+    let sx = 0;
+    const stage = $(".player__stage");
+    stage.addEventListener("touchstart", (e) => (sx = e.touches[0].clientX), { passive: true });
+    stage.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
+    });
+
+    // Chỉ chạy khi người xem cuộn tới; tôn trọng reduced-motion
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    playing = false;
+    go(0);
+    if (reduce) { toggle.textContent = "▶"; toggle.setAttribute("aria-label", "Phát"); }
+    new IntersectionObserver(([en]) => { if (!reduce) setPlaying(en.isIntersecting); }, { threshold: 0.5 }).observe($("#player"));
+    raf = requestAnimationFrame(frame);
+  })();
 
   // --- Families ---
   const fam = (f, name) => `

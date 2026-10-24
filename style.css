@@ -30,12 +30,17 @@ img { max-width: 100%; display: block; }
 .btn--light { background: #fff; color: var(--pink); box-shadow: 0 6px 0 rgba(0, 0, 0, .2); }
 
 /* ===== Hero ===== */
+/* Ảnh bìa đã có chữ "Save The Date" ở góc trên phải, nên giữ ảnh rõ nét,
+   chỉ phủ tối phần dưới để đặt tên + nút. */
 .hero {
-  position: relative; min-height: 100svh; display: grid; place-items: center; text-align: center;
-  background: 48% 22% / cover no-repeat; color: #fff; overflow: hidden;
+  position: relative; min-height: 100svh; display: grid; align-items: end; justify-items: center; text-align: center;
+  color: #fff; overflow: hidden; background: #2b3a2a;
 }
-.hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(80,20,40,.55)); }
-.hero__inner { position: relative; padding: 24px; animation: rise 1.2s ease-out both; }
+.hero__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; animation: zoom 18s ease-out both; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 55%, rgba(60,20,35,.75)); }
+.hero__inner { position: relative; z-index: 2; padding: 24px 24px 48px; animation: rise 1.2s ease-out both; }
+.hero .clouds { z-index: 1; }
+@keyframes zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
 .hero__eyebrow { letter-spacing: .4em; text-transform: uppercase; font-weight: 700; margin: 0; }
 .hero__names { font-family: var(--cute); font-weight: 400; font-size: clamp(2.6rem, 10vw, 5.5rem); line-height: 1.2; margin: 8px 0;
   display: flex; flex-wrap: wrap; gap: .1em .4em; justify-content: center; align-items: center; text-shadow: 0 3px 12px rgba(0,0,0,.35); }
@@ -50,27 +55,44 @@ img { max-width: 100%; display: block; }
 .clouds span:nth-child(2) { width: 80px; top: 26%; animation-duration: 52s; animation-delay: -20s; }
 .clouds span:nth-child(3) { width: 140px; top: 8%; animation-duration: 64s; animation-delay: -40s; }
 
-/* ===== Story timeline ===== */
-.story { padding: 80px 20px; background: linear-gradient(#fffaf3, #fff0f5); }
-.timeline { list-style: none; margin: 0 auto; padding: 0; max-width: 1040px; position: relative; display: grid; gap: 56px; }
-/* Đường nét đứt nối các chương */
-.timeline::before {
-  content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; transform: translateX(-50%);
-  background: repeating-linear-gradient(var(--pink) 0 12px, transparent 12px 24px); opacity: .35;
+/* ===== Story: clip chibi kiểu "story" Instagram ===== */
+.story { padding: 64px 16px; background: linear-gradient(#fffaf3, #fff0f5); }
+.player {
+  max-width: 720px; margin: 0 auto; background: #fff; border-radius: 28px; padding: 14px;
+  border: 3px solid #ffd1df; box-shadow: 0 14px 40px rgba(255, 93, 143, .18);
 }
-.chapter { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-.chapter::after { /* chấm tròn giữa timeline */
-  content: "♥"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%;
-  background: #fff; color: var(--pink); border: 3px solid var(--pink); font-size: 1.1rem;
-}
-.chapter:nth-child(even) .scene { order: 2; }
-.scene { background: #fff; border-radius: var(--radius); padding: 10px; box-shadow: 0 10px 30px rgba(255, 93, 143, .15); border: 3px solid #ffd1df; }
-.scene svg { width: 100%; height: auto; display: block; border-radius: 16px; background: #f4fbff; }
-.chapter__text { background: #fff; border-radius: var(--radius); padding: 24px 28px; box-shadow: 0 10px 30px rgba(0,0,0,.05); }
-.chapter__no { display: inline-block; background: var(--pink-soft); color: var(--pink); font-weight: 700; font-size: .8rem; padding: 2px 12px; border-radius: 999px; }
-.chapter__text h3 { font-size: 1.35rem; margin: 10px 0 8px; color: #3a2a3a; }
-.chapter__text p { margin: 0 0 8px; }
+.player__bars { display: flex; gap: 5px; margin-bottom: 10px; }
+.player__bars span { flex: 1; height: 5px; border-radius: 3px; background: #ffe3ec; overflow: hidden; }
+.player__bars i { display: block; height: 100%; width: 0; background: var(--pink); }
+.player__bars span.done i { width: 100%; }
+.player__stage { position: relative; aspect-ratio: 3 / 2; border-radius: 18px; overflow: hidden; background: #f4fbff; }
+.slide { position: absolute; inset: 0; margin: 0; opacity: 0; transform: scale(1.04); transition: opacity .6s, transform .6s; pointer-events: none; }
+.slide.is-active { opacity: 1; transform: none; }
+.slide svg { width: 100%; height: 100%; display: block; background: #f4fbff; }
+.player__tap { all: unset; position: absolute; top: 0; bottom: 0; width: 35%; cursor: pointer; z-index: 2; }
+.player__tap--prev { left: 0; } .player__tap--next { right: 0; }
+.player__caption { text-align: center; padding: 14px 8px 4px; min-height: 104px; }
+.player__no { display: inline-block; background: var(--pink-soft); color: var(--pink); font-weight: 700; font-size: .8rem; padding: 2px 12px; border-radius: 999px; }
+.player__caption h3 { margin: 8px 0 4px; font-size: 1.3rem; color: #3a2a3a; }
+.player__caption p { margin: 0; }
+.player__caption.swap { animation: rise .5s ease-out; }
+.player__controls { display: flex; justify-content: center; gap: 12px; padding-top: 6px; }
+.ctrl { width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer; background: var(--pink-soft); color: var(--pink); font: 700 1.3rem var(--body); }
+.ctrl--play { background: var(--pink); color: #fff; font-size: 1rem; }
+.ctrl:focus-visible, .player__tap:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* Animation trong cảnh chỉ chạy khi cảnh đang hiện (dùng lại class .pop của các cảnh) */
+.slide .pop { opacity: 0; transform-box: fill-box; transform-origin: bottom center; }
+.slide.is-active .pop { animation: pop .5s cubic-bezier(.3,1.6,.5,1) forwards; }
+.slide.is-active .pop--1 { animation-delay: .5s; }
+.slide.is-active .pop--2 { animation-delay: 1.8s; }
+.slide.is-active .pop--3 { animation-delay: 2.8s; }
+.offer { animation: offer 1.4s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: left center; }
+.shy { animation: shy 1.2s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: bottom center; }
+.twinkle { animation: twinkle 1.6s ease-in-out infinite alternate; }
+@keyframes offer { to { transform: translateX(4px) rotate(-4deg); } }
+@keyframes shy { to { transform: rotate(-4deg) translateY(-2px); } }
+@keyframes twinkle { from { opacity: .3; } to { opacity: 1; } }
 .aside { font-family: var(--script); font-size: 1.3rem; color: var(--pink); }
 
 /* ===== Invitation ===== */
@@ -149,11 +171,6 @@ img { max-width: 100%; display: block; }
 .reveal { opacity: 0; transform: translateY(40px) scale(.97); transition: opacity .8s, transform .8s cubic-bezier(.2,.8,.3,1.2); }
 .reveal.is-visible { opacity: 1; transform: none; }
 
-/* Chỉ chạy animation trong scene khi chương đã hiện ra */
-.chapter .pop { opacity: 0; transform-box: fill-box; transform-origin: bottom center; }
-.chapter.is-visible .pop { animation: pop .5s cubic-bezier(.3,1.6,.5,1) forwards; }
-.chapter.is-visible .pop--1 { animation-delay: .6s; }
-.chapter.is-visible .pop--2 { animation-delay: 1.8s; }
 
 .bob { animation: bob 2s ease-in-out infinite; transform-box: fill-box; }
 .bob--late { animation-delay: -1s; }
@@ -185,12 +202,9 @@ img { max-width: 100%; display: block; }
 
 /* ===== Responsive: điện thoại / tablet ===== */
 @media (max-width: 760px) {
-  .timeline { gap: 40px; }
-  .timeline::before { left: 18px; }
-  .chapter { grid-template-columns: 1fr; gap: 14px; padding-left: 44px; }
-  .chapter::after { left: 18px; top: 24px; width: 32px; height: 32px; font-size: .9rem; }
-  .chapter:nth-child(even) .scene { order: 0; }
-  .chapter__text { padding: 18px 20px; }
+  .player { padding: 10px; border-radius: 22px; }
+  .player__caption h3 { font-size: 1.15rem; }
+  .hero__photo { object-position: 50% 25%; }
   .album { grid-template-columns: repeat(2, 1fr); }
   .families { grid-template-columns: 1fr; }
   .countdown { gap: 8px; }
@@ -199,6 +213,6 @@ img { max-width: 100%; display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .reveal, .chapter .pop { opacity: 1; transform: none; }
+  .reveal, .slide .pop { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }

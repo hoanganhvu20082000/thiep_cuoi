@@ -20,7 +20,7 @@ window.WEDDING = {
     mapQuery: "Trung Tâm Tiệc Cưới Bright Star Biên Hòa"
   },
 
-  heroPhoto: "assets/photos/photo_22.jpg",
+  heroPhoto: "assets/photos/hero.jpg", // bản nét từ ảnh gốc photo_21
   // Chỉ vài tấm cho album nhỏ
   album: ["photo_03", "photo_05", "photo_08", "photo_13", "photo_17", "photo_25"],
 

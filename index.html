@@ -67,6 +67,7 @@
 
   <!-- ===== Hero ===== -->
   <header class="hero" id="hero">
+    <img class="hero__photo" id="hero-photo" alt="Anh Vũ và Phương Thảo" fetchpriority="high" />
     <div class="hero__inner">
       <p class="hero__eyebrow">Save the date</p>
       <h1 class="hero__names">
@@ -80,15 +81,15 @@
     <div class="clouds" aria-hidden="true"><span></span><span></span><span></span></div>
   </header>
 
-  <!-- ===== Story ===== -->
+  <!-- ===== Story: clip chibi tự chạy ===== -->
   <section class="story" id="story">
     <h2 class="section-title">Chuyện tình mình</h2>
-    <p class="section-sub">Một câu chuyện bắt đầu từ… một lời nhờ chở giùm</p>
+    <p class="section-sub">Bấm ▶ để xem, hoặc vuốt qua lại nha</p>
 
-    <ol class="timeline">
-      <!-- 1 -->
-      <li class="chapter reveal">
-        <div class="scene">
+    <div class="player" id="player" aria-roledescription="carousel" aria-label="Chuyện tình Anh Vũ và Phương Thảo">
+      <div class="player__bars" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+      <div class="player__stage">
+        <figure class="slide is-active" data-title="Chung một mái trường" data-caption="Ba năm chung trường nội trú Nguyễn Khuyến, mà chưa từng biết mặt nhau 🏫" aria-hidden="false">
           <svg viewBox="0 0 300 200" role="img" aria-label="Hai bạn học chung trường nội trú nhưng chưa từng gặp nhau">
             <rect x="0" y="160" width="300" height="40" fill="#bfe3a8"/>
             <!-- Cây hai bên -->
@@ -112,17 +113,8 @@
             <use href="#girl" x="238" y="92" width="44" height="72" class="bob bob--late"/>
             <text x="40" y="86" text-anchor="middle" class="qmark">?</text><text x="260" y="86" text-anchor="middle" class="qmark">?</text>
           </svg>
-        </div>
-        <div class="chapter__text">
-          <span class="chapter__no">Chương 1</span>
-          <h3>Chung một mái trường</h3>
-          <p>Anh Vũ và Phương Thảo học cùng trường nội trú Nguyễn Khuyến. Chung sân trường, chung căn tin, vậy mà ba năm trời chưa từng biết mặt nhau.</p>
-        </div>
-      </li>
-
-      <!-- 2 -->
-      <li class="chapter reveal">
-        <div class="scene">
+        </figure>
+        <figure class="slide" data-title="Một người bạn chung" data-caption="Hai đứa chỉ có chung… đúng một người bạn 🤝" aria-hidden="true">
           <svg viewBox="0 0 300 200" role="img" aria-label="Mỗi người một mối tình học trò, chỉ chung một người bạn">
             <rect x="0" y="160" width="300" height="40" fill="#bfe3a8"/>
             <use href="#boy" x="20" y="92" width="44" height="72"/>
@@ -135,17 +127,8 @@
             <rect x="104" y="40" width="96" height="30" rx="14" fill="#fff" stroke="#7bc67b" stroke-width="2"/>
             <text x="152" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#4a7a4a">Bạn chung 🤝</text>
           </svg>
-        </div>
-        <div class="chapter__text">
-          <span class="chapter__no">Chương 2</span>
-          <h3>Mỗi người một thanh xuân</h3>
-          <p>Mỗi người đều có một mối tình học trò của riêng mình ngay trong trường. Thứ duy nhất nối hai đứa lại là một người bạn chung, quen cả hai mà chưa bao giờ giới thiệu.</p>
-        </div>
-      </li>
-
-      <!-- 3 -->
-      <li class="chapter reveal">
-        <div class="scene">
+        </figure>
+        <figure class="slide" data-title="4 năm sau" data-caption="Bạn ấy lên xe hoa, nhờ anh chở giùm cô bạn đi cùng 💌" aria-hidden="true">
           <svg viewBox="0 0 300 200" role="img" aria-label="Bốn năm sau, người bạn chung cưới và nhờ chú rể chở cô dâu đi">
             <rect x="0" y="160" width="300" height="40" fill="#bfe3a8"/>
             <rect x="20" y="30" width="70" height="70" rx="8" fill="#fff" stroke="#e76f51" stroke-width="3"/>
@@ -176,17 +159,8 @@
             </g>
             <use href="#boy" x="230" y="100" width="38" height="62" class="pop pop--2"/>
           </svg>
-        </div>
-        <div class="chapter__text">
-          <span class="chapter__no">Chương 3</span>
-          <h3>Một lời nhờ vả</h3>
-          <p>Ra trường, đi làm, bốn năm trôi qua. Đến ngày người bạn chung lên xe hoa, bạn ấy nhờ Anh Vũ cho Phương Thảo đi ké xe về đám cưới. Cũng từ lúc đó, hai đứa mới lần đầu thấy mặt nhau.</p>
-        </div>
-      </li>
-
-      <!-- 4 -->
-      <li class="chapter chapter--wide reveal">
-        <div class="scene scene--road">
+        </figure>
+        <figure class="slide" data-title="Sài Gòn → Bình Phước" data-caption="Chuyến xe đầu tiên. Càng đi càng nói chuyện rôm rả 🚗" aria-hidden="true">
           <svg viewBox="0 0 300 200" role="img" aria-label="Chuyến xe Sài Gòn đi Bình Phước, chú rể chở cô dâu đi ké xe">
             <rect x="0" y="0" width="300" height="200" fill="#dff3ff"/>
             <g class="hills"><path d="M0 130 Q60 80 120 130 Q180 70 240 130 Q280 100 300 120 L300 150 L0 150Z" fill="#a8d5a2"/></g>
@@ -211,18 +185,8 @@
               <text x="228" y="66" text-anchor="middle" font-size="9.5" font-weight="700" fill="#e63946">Bình Phước thẳng tiến! 🚗</text>
             </g>
           </svg>
-        </div>
-        <div class="chapter__text">
-          <span class="chapter__no">Chương 4</span>
-          <h3>Chuyến xe Sài Gòn → Bình Phước</h3>
-          <p>Hơn trăm cây số đường dài, lần đầu gặp mặt mà phải ngồi chung một chiếc xe. Ban đầu còn ngại ngùng, chẳng biết nói gì, vậy mà càng đi càng nói chuyện rôm rả.</p>
-          <p class="aside">Chuyến xe định mệnh bắt đầu từ đây 🚗💕</p>
-        </div>
-      </li>
-
-      <!-- 5 -->
-      <li class="chapter reveal">
-        <div class="scene">
+        </figure>
+        <figure class="slide" data-title="Từ người lạ thành người thương" data-caption="Nhắn tin, cà phê, rồi hẹn hò lúc nào không hay ☕" aria-hidden="true">
           <svg viewBox="0 0 300 200" role="img" aria-label="Về lại Sài Gòn, hai người nhắn tin làm quen">
             <rect x="0" y="160" width="300" height="40" fill="#ffe3ec"/>
             <use href="#boy" x="22" y="92" width="44" height="72" class="bob"/>
@@ -234,17 +198,44 @@
             <g class="float"><use href="#heart" x="140" y="118" width="20" height="18"/></g>
             <g class="float float--late"><use href="#heart" x="166" y="130" width="14" height="13"/></g>
           </svg>
-        </div>
-        <div class="chapter__text">
-          <span class="chapter__no">Chương 5</span>
-          <h3>Từ người lạ thành người thương</h3>
-          <p>Sau chuyến xe ấy, hai đứa bắt đầu nhắn tin, làm quen, rồi hẹn nhau đi cà phê. Lần này cô ấy nhớ tên anh rồi.</p>
-        </div>
-      </li>
-
-      <!-- 6 -->
-      <li class="chapter reveal">
-        <div class="scene">
+        </figure>
+        <figure class="slide" data-title="Lời tỏ tình" data-caption="Sau thời gian tìm hiểu và hẹn hò, anh Vũ đã chính thức ngỏ lời… và cô ấy gật đầu 🌹" aria-hidden="true">
+          <svg viewBox="0 0 300 200" role="img" aria-label="Anh Vũ cầm hoa tỏ tình, Phương Thảo đồng ý">
+            <rect x="0" y="0" width="300" height="200" fill="#fff0f6"/>
+            <circle cx="262" cy="30" r="14" fill="#fff6c9"/><circle cx="268" cy="26" r="12" fill="#fff0f6"/>
+            <g class="twinkle"><text x="40" y="30" font-size="10" fill="#ffc94d">✦</text><text x="120" y="20" font-size="8" fill="#ffc94d">✦</text><text x="200" y="40" font-size="9" fill="#ffc94d">✦</text></g>
+            <rect x="0" y="160" width="300" height="40" fill="#ffd6e5"/>
+            <!-- Anh Vũ quỳ một chân, đưa hoa -->
+            <g class="bob">
+              <use href="#boy" x="70" y="104" width="40" height="66"/>
+              <rect x="76" y="150" width="30" height="10" rx="5" fill="#2d2a32"/>
+            </g>
+            <g class="offer">
+              <path d="M108 136 L132 128" stroke="#2e7d32" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="134" cy="124" r="6" fill="#e63946"/><circle cx="141" cy="128" r="5.5" fill="#d62839"/>
+              <circle cx="137" cy="117" r="5.5" fill="#ff4d6d"/><circle cx="144" cy="121" r="5" fill="#e63946"/>
+              <path d="M128 130 L138 134 L134 124Z" fill="#7bc67b"/>
+            </g>
+            <use href="#girl" x="192" y="92" width="46" height="74" class="shy"/>
+            <g class="pop pop--1">
+              <rect x="6" y="40" width="140" height="44" rx="14" fill="#fff" stroke="#2d2a32" stroke-width="2"/>
+              <path d="M70 84 L78 98 L88 84Z" fill="#fff" stroke="#2d2a32" stroke-width="2"/>
+              <text x="76" y="59" text-anchor="middle" font-size="9.5" fill="#333">Em đồng ý làm</text>
+              <text x="76" y="74" text-anchor="middle" font-size="9.5" font-weight="700" fill="#e63946">bạn gái anh nha? 🌹</text>
+            </g>
+            <g class="pop pop--2">
+              <rect x="168" y="48" width="122" height="34" rx="14" fill="#ff8fab"/>
+              <path d="M214 82 L210 94 L226 82Z" fill="#ff8fab"/>
+              <text x="229" y="69" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">Dạ… em đồng ý! 🥰</text>
+            </g>
+            <g class="pop pop--3">
+              <use href="#heart" x="150" y="96" width="34" height="31"/>
+              <use href="#heart" x="132" y="70" width="16" height="15"/>
+              <use href="#heart" x="178" y="76" width="14" height="13"/>
+            </g>
+          </svg>
+        </figure>
+        <figure class="slide" data-title="Về chung một nhà" data-caption="06.12.2026, tụi mình chính thức thành vợ chồng 💍" aria-hidden="true">
           <svg viewBox="0 0 300 200" role="img" aria-label="Chú rể và cô dâu nắm tay nhau về chung một nhà">
             <rect x="0" y="160" width="300" height="40" fill="#ffe3ec"/>
             <path d="M70 160 Q70 40 150 40 Q230 40 230 160" fill="none" stroke="#ff8fab" stroke-width="6" stroke-dasharray="2 10" stroke-linecap="round"/>
@@ -256,14 +247,21 @@
             <g class="float"><use href="#heart" x="196" y="70" width="16" height="15"/></g>
             <text x="150" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="#e63946">06.12.2026 💍</text>
           </svg>
-        </div>
-        <div class="chapter__text">
-          <span class="chapter__no">Chương 6</span>
-          <h3>Và rồi… về chung một nhà</h3>
-          <p>Từ một lời nhờ chở giùm, giờ hai đứa đi chung một đường. Tụi mình rất mong có bạn ở đó, cùng chứng kiến ngày tụi mình nên duyên vợ chồng.</p>
-        </div>
-      </li>
-    </ol>
+        </figure>
+        <button type="button" class="player__tap player__tap--prev" data-act="prev" aria-label="Cảnh trước"></button>
+        <button type="button" class="player__tap player__tap--next" data-act="next" aria-label="Cảnh sau"></button>
+      </div>
+      <div class="player__caption" aria-live="polite">
+        <span class="player__no" id="player-no">1/7</span>
+        <h3 id="player-title"></h3>
+        <p id="player-text"></p>
+      </div>
+      <div class="player__controls">
+        <button type="button" class="ctrl" data-act="prev" aria-label="Cảnh trước">‹</button>
+        <button type="button" class="ctrl ctrl--play" data-act="toggle" id="player-toggle" aria-label="Tạm dừng">❚❚</button>
+        <button type="button" class="ctrl" data-act="next" aria-label="Cảnh sau">›</button>
+      </div>
+    </div>
   </section>
 
   <!-- ===== Invitation ===== -->
