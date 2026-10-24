@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --pink: #ff5d8f;
   --pink-soft: #ffe3ec;
   --blue: #5b8def;
@@ -32,7 +32,7 @@ img { max-width: 100%; display: block; }
 /* ===== Hero ===== */
 .hero {
   position: relative; min-height: 100svh; display: grid; place-items: center; text-align: center;
-  background: center 30% / cover no-repeat; color: #fff; overflow: hidden;
+  background: 48% 22% / cover no-repeat; color: #fff; overflow: hidden;
 }
 .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(80,20,40,.55)); }
 .hero__inner { position: relative; padding: 24px; animation: rise 1.2s ease-out both; }
@@ -162,6 +162,9 @@ img { max-width: 100%; display: block; }
 .qmark { font: 700 22px var(--body); fill: var(--pink); animation: bob 1.4s ease-in-out infinite; }
 .flag { animation: wave 1s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: left center; }
 .dash { animation: dash 1.2s linear infinite; }
+.point { animation: point .8s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: right center; }
+.arrow-bounce { animation: bob 1s ease-in-out infinite; transform-box: fill-box; }
+@keyframes point { from { transform: translateX(0) rotate(0); } to { transform: translateX(-4px) rotate(-6deg); } }
 
 .car-drive { animation: drive 2.6s ease-in-out infinite; }
 .wheel { transform-box: fill-box; transform-origin: center; animation: spin .6s linear infinite; }

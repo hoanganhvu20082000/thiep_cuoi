@@ -1,4 +1,4 @@
-// Sửa nội dung thiệp tại đây. Trường nào để "" sẽ tự ẩn.
+﻿// Sửa nội dung thiệp tại đây. Trường nào để "" sẽ tự ẩn.
 window.WEDDING = {
   groom: "Anh Vũ",
   bride: "Phương Thảo",
@@ -20,7 +20,7 @@ window.WEDDING = {
     mapQuery: "Trung Tâm Tiệc Cưới Bright Star Biên Hòa"
   },
 
-  heroPhoto: "assets/photos/photo_01.jpg",
+  heroPhoto: "assets/photos/photo_22.jpg",
   // Chỉ vài tấm cho album nhỏ
   album: ["photo_03", "photo_05", "photo_08", "photo_13", "photo_17", "photo_25"],
 
