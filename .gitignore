@@ -3,3 +3,6 @@ assets/images/
 _src/
 dist/
 .vercel/
+
+# Ban goc nhac (chi deploy ban web da cat/nen)
+assets/music/vay-cuoi.mp3

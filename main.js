@@ -18,26 +18,29 @@
   // nếu bị chặn thì phát ở lần chạm / cuộn / bấm phím đầu tiên.
   (() => {
     if (!W.musicFile) return;
-    const start = W.musicStart || 0;
-    const audio = Object.assign(new Audio(W.musicFile), { volume: 0.6, preload: "auto" });
+    // File đã cắt sẵn từ đoạn hay → không cần tua, phát được ngay khi có vài giây dữ liệu
+    const audio = Object.assign(new Audio(W.musicFile), { volume: 0.7, preload: "auto", loop: true });
     audio.setAttribute("playsinline", "");
-    audio.addEventListener("loadedmetadata", () => { if (audio.currentTime < start) audio.currentTime = start; }, { once: true });
-    // Hết bài thì quay lại đoạn bắt đầu
-    audio.addEventListener("ended", () => { audio.currentTime = start; audio.play().catch(() => {}); });
+    audio.load();
 
-    let started = false;
+    let started = false, timer = 0;
     // Chỉ các sự kiện này mới được trình duyệt tính là "người dùng tương tác" (scroll thì không)
-    const EVENTS = ["pointerup", "touchend", "click", "keydown"];
+    const EVENTS = ["pointerdown", "touchstart", "click", "keydown"];
+    const done = () => {
+      started = true;
+      clearInterval(timer);
+      EVENTS.forEach((ev) => removeEventListener(ev, play, true));
+    };
     const play = () => {
       if (started) return;
-      if (audio.currentTime < start && audio.readyState >= 1) audio.currentTime = start;
-      audio.play().then(() => {
-        started = true;
-        EVENTS.forEach((ev) => removeEventListener(ev, play));
-      }).catch(() => {});
+      const p = audio.play();
+      if (p && p.then) p.then(done).catch(() => {}); else done();
     };
-    EVENTS.forEach((ev) => addEventListener(ev, play, { passive: true }));
-    play(); // thử phát ngay; nếu trình duyệt chặn thì phát ở lần chạm đầu tiên
+    // capture=true: bắt cả chạm vào nút/ảnh trong thiệp
+    EVENTS.forEach((ev) => addEventListener(ev, play, { passive: true, capture: true }));
+    // Thử phát ngay, rồi thử lại mỗi 3s (trình duyệt nào cho tự phát sẽ phát luôn)
+    play();
+    timer = setInterval(play, 3000);
 
     // Tạm dừng khi khách chuyển tab / tắt màn hình, mở lại thì phát tiếp
     document.addEventListener("visibilitychange", () => {
