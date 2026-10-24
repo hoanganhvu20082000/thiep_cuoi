@@ -28,6 +28,6 @@ window.WEDDING = {
   // File đã cắt sẵn từ giây 14 của bản gốc (assets/music/vay-cuoi.mp3), nén 96kbps cho nhẹ.
   musicFile: "assets/music/vay-cuoi-web.mp3",
 
-  // URL Google Form (/formResponse) hoặc Apps Script để nhận RSVP. Trống = chỉ lưu trên máy khách.
-  rsvpEndpoint: ""
+  // API lời chúc (api/wishes.js) → lưu vào file wishes.json. Để "" thì chỉ lưu trên máy khách.
+  rsvpEndpoint: "/api/wishes"
 };

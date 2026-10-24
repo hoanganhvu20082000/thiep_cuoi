@@ -201,8 +201,8 @@
   });
 
   // --- RSVP + lời chúc ---
-  // Có rsvpEndpoint (Google Apps Script) → lưu/đọc từ Google Sheet, mọi khách đều thấy.
-  // Không có → chỉ lưu localStorage trên máy khách (dùng khi xem thử local).
+  // Có rsvpEndpoint (/api/wishes) → lưu/đọc file wishes.json chung, mọi khách đều thấy.
+  // API lỗi hoặc mở file trực tiếp (file://) → tạm lưu localStorage trên máy khách.
   const KEY = "wedding-wishes-vu-thao";
   const loadLocal = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } };
   let current = [];
@@ -222,13 +222,20 @@
       box.querySelector(".wishes__track").style.animationDuration = `${list.length * 2.5}s`;
     }
   };
-  (async () => {
-    if (W.rsvpEndpoint) {
-      try { current = (await (await fetch(W.rsvpEndpoint)).json()).wishes || []; }
-      catch { current = []; }
-    } else current = loadLocal().slice().reverse();
+  const useApi = !!W.rsvpEndpoint && location.protocol.startsWith("http");
+  const loadWishes = async () => {
+    if (useApi) {
+      try {
+        const r = await fetch(W.rsvpEndpoint, { cache: "no-store" });
+        if (r.ok) { current = (await r.json()).wishes || []; render(); return; }
+      } catch { /* rơi xuống localStorage */ }
+    }
+    current = loadLocal().slice().reverse();
     render();
-  })();
+  };
+  loadWishes();
+  // Cập nhật lời chúc mới của khách khác mỗi 60s
+  if (useApi) setInterval(() => { if (!document.hidden) loadWishes(); }, 60000);
 
   $("#rsvp").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -242,14 +249,16 @@
     const st = $("#rsvp-status");
     st.textContent = "Đang gửi…"; btn.disabled = true;
     try {
-      if (W.rsvpEndpoint) {
-        // no-cors: Apps Script vẫn nhận được dữ liệu, chỉ là không đọc được response
-        await fetch(W.rsvpEndpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams(entry) });
+      if (useApi) {
+        const r = await fetch(W.rsvpEndpoint, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(entry),
+        });
+        if (!r.ok) throw new Error(String(r.status));
       } else {
         localStorage.setItem(KEY, JSON.stringify([...loadLocal(), entry]));
       }
     } catch {
-      st.textContent = "Gửi chưa được, bạn thử lại nha."; btn.disabled = false; return;
+      st.textContent = "Gửi chưa được, bạn thử lại sau ít phút nha."; btn.disabled = false; return;
     }
     btn.disabled = false;
     current = [{ name: entry.name, message: entry.message }, ...current];
